@@ -6,36 +6,41 @@
 				<li v-for='comment in comments'>
 					<!-- 一级评论 -->
 					<div class="comment-main-level">
-						<!-- 一级评论作者 -->
+						<!-- 一级评论作者头像 -->
 						<div class="comment-avatar"><img :src="comment.autorPhoto" alt="">
 						</div>
-						<!-- Contenedor del Comentario -->
+						<!-- 一级评论框 -->
 						<div class="comment-box">
 							<div class="comment-head">
+								<!-- 一级评论作者 -->
 								<h6 class="comment-name"><a href="#">{{comment.autorName}}</a></h6>
+								<!-- 一级评论时间 -->
 								<span>{{comment.messageTime|time}}</span>
 								<i class="fa fa-reply"></i>
 								<i class="fa fa-heart"></i>
 							</div>
+							<!-- 一级评论内容 -->
 							<div class="comment-content">
 								{{comment.message}}
 							</div>
 						</div>
 					</div>
-					<!-- Respuestas de los comentarios -->
 					<ul class="comments-list reply-list">
 						<li v-for="childComment in comment.children">
-							<!-- Avatar -->
+							<!-- 二级评论头像 -->
 							<div class="comment-avatar"><img :src="childComment.autorPhoto" alt="">
 							</div>
-							<!-- Contenedor del Comentario -->
+							<!-- 二级评论框 -->
 							<div class="comment-box">
 								<div class="comment-head">
+									<!-- 二级评论作者 -->
 									<h6 class="comment-name"><a href="#">{{childComment.autorName}}</a></h6>
+									<!-- 二级评论时间 -->
 									<span>{{childComment.messageTime|time}}</span>
 									<i class="fa fa-reply"></i>
 									<i class="fa fa-heart"></i>
 								</div>
+								<!-- 二级评论内容 -->
 								<div class="comment-content">
 									{{childComment.message}}
 								</div>
@@ -45,7 +50,10 @@
 				</li>
 			</ul>
 		</div>
-		<router-view></router-view>
+		<button type="button" @click="speak()">发表评论</button>
+		<div id="comment" style="display: none;">
+			<router-view></router-view>
+		</div>
 	</div>
 </template>
 
@@ -76,7 +84,7 @@
 				{
 					"autorName": "段誉",
 					"autorPhoto": "/images/2.jpg",
-					"message": "辣鸡影院，全是再也不来了！",
+					"message": "辣鸡影院，再也不来了！",
 					"messageTime": "Mon Nov 11 2019 13:34:14",
 					children:[
 						{
@@ -102,7 +110,17 @@
 			};
 		},
 		methods: {
-
+			speak(){
+				var comment = $("#comment").html();
+				layer.open({
+				  type: 1,
+				  skin: 'layui-layer-demo', //样式类名
+				  closeBtn: 0, //不显示关闭按钮
+				  anim: 2,
+				  shadeClose: true, //开启遮罩关闭
+				  content: comment
+				});
+			}
 		},
 		filters:{
 			time(data){
