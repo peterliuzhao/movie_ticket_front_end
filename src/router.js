@@ -10,8 +10,10 @@ import film from './components/film.vue';
 import hotFilmsList from './components/hotFilmsList.vue';todayFilms
 import filmTags from './components/filmTags.vue';
 import todayFilms from './components/todayFilms.vue';hotFilms
-import hotPlaying from './components/hotPlaying.vue';
+import hotPlaying from './components/hotPlaying.vue';theaterComment
 import hotFilms from './components/hotFilms.vue';
+import theaterComment from './components/theaterComment.vue';
+import editor from './components/editor.vue';
 
 var router = new VueRouter({
 	routes: [{
@@ -37,7 +39,10 @@ var router = new VueRouter({
 						"filmTags":filmTags,
 						"todayFilms":todayFilms
 					}}
-				]}
+				]},
+				{path:"/theaterComment",component:theaterComment,children:[
+					{path:"/theaterComment",component:editor}
+				]},
 			]
 		}
 	]

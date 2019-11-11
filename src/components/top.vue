@@ -69,7 +69,7 @@
 					["电影","/home",false],
 					["榜单","/home",false],
 					["放映点信息","/home",false],
-					["评论区","/home",false],
+					["评论区","/theaterComment",false],
 					["关于我们","/home",false]
 				],
 			};

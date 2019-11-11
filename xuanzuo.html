@@ -35,28 +35,34 @@
 				background-size: cover;
 				/* border: 1px solid black; */
 			}
-			.bg-sit{
+			
+			/* 座位 */
+			.bg-sit {
 				background-image: url('/images/bg-sit.png');
 			}
-
+			
 			.bg-sit:hover {
 				cursor: pointer;
 			}
-
+			
+			/* 已售座位 */
 			.bg-sited {
-				background-color: red;
+				/* background-color: red; */
 				background-image: url('/images/bg-sited.png');
 			}
-
+			
+			/* 空位置 */
 			.bg-nosit {
 				/* border: 1px solid white; */
 			}
-
+			
+			/* 已选座位 */
 			.bg-temp {
 				cursor: pointer;
 				background-image: url('/images/bg-temp.png');
 			}
-
+			
+			/* 已选座位号 */
 			.select-sit {
 				border: 2px orange solid;
 				border-radius: 10px;
@@ -66,9 +72,11 @@
 			}
 
 			.row {
+				/* 清除格式并换行 */
 				clear: both;
 			}
-
+			
+			/* 确认选座按钮 */
 			.btn {
 				border-radius: 10px;
 				width: 200px;
@@ -77,9 +85,10 @@
 				background-color: rgba(255, 0, 0, 0.8);
 				font-size: 25px;
 				color: white;
-				font-family: "微软雅黑";
+				font-family: '微软雅黑';
 			}
-
+			
+			/* 右侧信息栏 */
 			.win-right {
 				padding-left: 2%;
 				padding-top: 2%;
@@ -88,17 +97,20 @@
 				border: 1px white solid;
 				height: 100%;
 			}
-
+			
+			/* 整体容器 */
 			.box {
 				width: 90%;
 				margin-left: 5%;
 				height: 64%;
 			}
-
+			
+			/* 电影封面 */
 			.film-img {
 				width: 80%;
 			}
-
+			
+			/* 电影名 */
 			.film-title {
 				font-family: "微软雅黑";
 				font-weight: 900;
@@ -109,7 +121,6 @@
 				height: 100%;
 			}
 
-			.price {}
 		</style>
 	</head>
 	<body>
@@ -206,6 +217,7 @@
 						filmImg: "images/2.jpg",
 						filmPrice: 33.50
 					},
+					// 座位状态数组
 					list: [
 						[1, 1, 2, 2, 1, 0, 1, 2, 1, 1],
 						[1, 1, 2, 2, 1, 2, 1, 2, 1, 0],
@@ -218,13 +230,13 @@
 						[1, 1, 2, 2, 1, 1, 1, 2, 1, 0],
 						[1, 1, 2, 2, 1, 1, 1, 2, 1, 0]
 					],
-					styleObj1: {
-						'background-color': 'red'
-					},
+					// 已选座位数
 					msgCount: 0,
+					// 选座信息
 					msg: []
 				},
 				methods: {
+					// 选座时触发
 					selectSeat(data, x, y) {
 						if (data == 1 && this.msgCount <= 3) {
 							this.$set(this.msg, this.msgCount++, [x, y]);
@@ -248,6 +260,7 @@
 							}
 						}
 					},
+					// 确认选座时触发
 					sub() {
 						var x, y;
 						for (var i = 0; i < this.msg.length; i++) {
@@ -258,10 +271,13 @@
 						}
 					}
 				},
+				// 过滤器
 				filters: {
+					// 选座信息过滤器
 					f3(data) {
 						return (data[0] + 1) + "排 | " + (data[1] + 1) + "座";
 					},
+					// 日期过滤器
 					time(data) {
 						var date = new Date(data);
 						var month = date.getMonth() + 1;
@@ -270,6 +286,7 @@
 						var minutes = date.getMinutes() > 9 ? date.getMinutes() : ("0" + date.getMinutes());
 						return month + "月" + day + "日  " + hours + ":" + minutes;
 					},
+					// 价格过滤器,数字保留两位小数
 					price(data) {
 						var price = parseFloat(data);
 						return price.toFixed(2);

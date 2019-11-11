@@ -8,20 +8,19 @@
 							<div class="art-header">
 								<div class="col-1-3">
 									<div class="wrap-col">
-										<img src="images/boy7.png" />
+										<a href="#"><img :src="film.filmPhoto" /></a>
 									</div>
 								</div>
 								<div class="col-2-3">
 									<div class="wrap-col">
 										<ul>
-											<li><p>Tags: <a href="#">Action</a></p></li>
-											<li><p>Production: <a href="#">Action</a></p></li>
-											<li><p>Actor: <a href="#">Action</a></p></li>
-											<li><p>Director: <a href="#">Action</a></p></li>
-											<li><p>Nation: <a href="#">Action</a></p></li>
-											<li><p>Tags: <a href="#">Action</a></p></li>
-											<li><p>Upload: <a href="#">Action</a></p></li>
-											<li><a class="button bt1" href="#">Play</a><a class="button bt1" href="#">Trailer</a></li>
+											<li><p><h1 class="filmTitle">{{film.fname}}</h1></p></li>
+											<li><p>类型: <a href="#">{{film.ftname}}</a></p></li>
+											<li><p>主演: <a href="#">{{film.factor}}</a></p></li>
+											<li><p>导演: <a href="#">张艺谋</a></p></li>
+											<li><p>地区: <a href="#">中国大陆</a></p></li>
+											<li><p>上映时间: <a href="#">2019-3</a></p></li>
+											<li><a class="button bt1" href="#" style="color: white;">特惠订票</a></li>
 											<li class="star"><a href="#"><img src="images/star.png" /></a></li>
 										</ul>
 									</div>
@@ -72,11 +71,11 @@
 				</div>
 				<div id="sidebar" class="col-1-3">
 					<div class="wrap-sidebar">
-						<!---- Start Widget ---->
+						<!-- Start Widget -->
 						<router-view name="hotFilmsList"></router-view>
-						<!---- Start Widget ---->
+						<!-- Start Widget -->
 						<router-view name="filmTags"></router-view>
-						<!---- Start Widget ---->
+						<!-- Start Widget -->
 						<router-view name="todayFilms"></router-view>
 					</div>
 				</div>
@@ -84,17 +83,32 @@
 		</section>
 	</div>
 </template>
-
 <script>
 	export default{
 		data(){
 			return{
-				
+				film:{
+					"fname":"我的世界",
+					"ftname":"动作",
+					"factor":"王菲，李亚鹏",
+					"factor_photo":"img",
+					"filmPhoto":"images/boy7.png"
+				}
 			}
 		},
 		methods:{}
 	}
 </script>
 
-<style>
+<style scoped="scoped">
+	.filmTitle{
+		color: gold;
+	}
+	.bt1:hover{
+		background-color: #3CB371;
+	}
+	.wrap-col a{
+		color: firebrick;
+		font-weight: 900;
+	}
 </style>
