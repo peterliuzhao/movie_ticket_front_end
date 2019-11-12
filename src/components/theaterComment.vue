@@ -52,8 +52,10 @@
 				</li>
 			</ul>
 		</div>
-		<div id="comment" class="editor">
-			<router-view></router-view>
+		<div style="width:60%;margin:auto;">
+			<div id="comment" class="editor">
+				<router-view></router-view>
+			</div>
 		</div>
 	</div>
 </template>

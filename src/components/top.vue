@@ -18,7 +18,9 @@
 						</div>
 						<div class="col-1-2">
 							<div class="wrap-col f-right">
-								登录 注册
+								<a href="#" @click.prevent="login()">登录</a>
+								 
+								注册
 							</div>
 						</div>
 					</div>
@@ -45,10 +47,9 @@
 						<nav>
 							<div class="wrap-nav">
 								<ul>
-									<li v-for='(meal,i) in meals' :class="{active:meal[2]}" @click="select(i)">
+									<li v-for='(meal,i) in meals' :key="i" :class="{active:meal[2]}" @click="select(i)">
 										<router-link :to="meal[1]">{{meal[0]}}</router-link>
 									</li>
-									<!-- <li :class="{active:ischecked[1]}"><router-link to="/selectSeat">选座</router-link></li> -->
 								</ul>
 							</div>
 						</nav>
@@ -56,10 +57,14 @@
 				</div>
 			</div>
 		</header>
+		<div id="login" v-show="false">
+			<login></login>
+		</div>
 	</div>
 </template>
 
 <script>
+import login from "./login.vue";
 	export default {
 		data() {
 			return {
@@ -75,6 +80,20 @@
 			};
 		},
 		methods: {
+			login(){
+				// if(data.children)
+				var login = $("#login").html();
+				layer.open({
+				  type: 1,
+				  title:"登录",
+				  skin: 'layui-layer-demo', //样式类名
+				  area: ['45%', '45%'], //宽高
+				  closeBtn: 1, //不显示关闭按钮
+				  anim: 2,
+				  shadeClose: false, //开启遮罩关闭
+				  content: login
+				});
+			},
 			select(index){
 				for(var j=0;j<this.meals.length;j++){
 					this.meals[j][2] = false;
@@ -82,9 +101,15 @@
 				}
 				this.meals[index][2] = true;
 			}
+		},
+		components:{
+			login
 		}
 	}
 </script>
 
 <style scoped="scoped">
+#top a{
+	color: white;
+}
 </style>
