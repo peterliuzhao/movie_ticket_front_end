@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": ".\\node_modules\\.bin\\webpack-dev-server --port 8888 --hot",
+    "dev": ".\\node_modules\\.bin\\webpack-dev-server --port 80 --hot",
     "wp": ".\\node_modules\\.bin\\webpack"
   },
   "keywords": [],

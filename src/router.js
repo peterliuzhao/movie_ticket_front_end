@@ -16,9 +16,9 @@ import theaterComment from './components/theaterComment.vue';
 import editor from './components/editor.vue';
 
 var router = new VueRouter({
-	routes: [{
-			path: "/*",
-			components: {
+	routes: [
+		{path: '/',redirect: '/home',component: home},
+		{path: "/*",components: {
 				"top": top,
 				"middle": middle,
 				"bottom": bottom

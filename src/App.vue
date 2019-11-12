@@ -1,6 +1,7 @@
 <template>
 	<div id="app">
 		<div class="wrap-body">
+			<router-view></router-view>
 			<router-view name="top"></router-view>
 			<router-view name="middle"></router-view>
 			<router-view name="bottom"></router-view>
