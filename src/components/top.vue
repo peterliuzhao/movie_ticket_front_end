@@ -8,10 +8,10 @@
 							<div class="wrap-col">
 								<ul>
 									<li class="mail">
-										<p>ContacUst@Gmail.com</p>
+										<p>lijunqi6666@163.com</p>
 									</li>
 									<li class="phone">
-										<p>80 88888 7</p>
+										<p>888 8888 8888</p>
 									</li>
 								</ul>
 							</div>

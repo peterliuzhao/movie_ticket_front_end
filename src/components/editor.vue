@@ -4,7 +4,7 @@
 		</div>
 		<div ref="editor" class="text">
 		</div>
-		<button type="button" class="commit" @click="commit()">提交</button>
+		<button type="button" class="commit" @click="commit()">发表评论</button>
 	</div>
 </template>
 
@@ -117,8 +117,7 @@
 
 <style scoped="scoped">
 	.editor {
-		width: 60%;
-		/* height: 300px; */
+		width: 80%;
 		margin: 0 auto;
 		position: relative;
 		z-index: 0;
@@ -136,7 +135,6 @@
 	.text {
 		border: 1px solid #ccc;
 		height: 200px;
-		min-height: 300px;
 		color: #000000;
 	}
 	.text:hover {

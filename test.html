@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>自动补全</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .clear:after{
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            clear: both;
+        }
+        body{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h4>自动补全</h4>
+<input type="text" id="input">
+<div id="input_con"></div>
+<div class="log">
+    <p>日志：</p>
+</div>
+<script>
+    $(function() {
+        var words = [
+            "abc",
+            "aaa",
+            "bbb",
+            "李俊琪"
+        ]
+        $('#input').on({
+            input : function(e){
+                var flag = e.target.isNeedPrevent;
+                if(!flag){
+                    $('.log').append(' input');
+                }
+            },
+            compositionstart : function(e){
+                $('.log').append(' compositionstart');
+                e.target.isNeedPrevent = true ;
+            },
+            compositionend : function(e){
+                $('.log').append(' compositionend');
+                e.target.isNeedPrevent = false;
+            }
+        });
+
+        function response(){
+            $('#input_con').append('<p>keyup 事件触发</p>')
+        }
+
+    });
+</script>
+</body>
+</html>

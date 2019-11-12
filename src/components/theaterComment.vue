@@ -3,7 +3,7 @@
 		<!-- 评论区 -->
 		<div class="comments-container">
 			<ul id="comments-list" class="comments-list">
-				<li v-for='comment in comments'>
+				<li v-for='comment in comments' :key='comment'>
 					<!-- 一级评论 -->
 					<div class="comment-main-level">
 						<!-- 一级评论作者头像 -->
@@ -18,6 +18,7 @@
 								<span>{{comment.messageTime|time}}</span>
 								<i class="fa fa-reply"></i>
 								<i class="fa fa-heart"></i>
+								<div class="right"><a href="#" @click.prevent="reply(comment)">回复</a></div>
 							</div>
 							<!-- 一级评论内容 -->
 							<div class="comment-content">
@@ -26,7 +27,7 @@
 						</div>
 					</div>
 					<ul class="comments-list reply-list">
-						<li v-for="childComment in comment.children">
+						<li v-for="childComment in comment.children" :key="childComment">
 							<!-- 二级评论头像 -->
 							<div class="comment-avatar"><img :src="childComment.autorPhoto" alt="">
 							</div>
@@ -39,6 +40,7 @@
 									<span>{{childComment.messageTime|time}}</span>
 									<i class="fa fa-reply"></i>
 									<i class="fa fa-heart"></i>
+									<div class="right"><a href="#" @click.prevent="reply(childComment)">回复</a></div>
 								</div>
 								<!-- 二级评论内容 -->
 								<div class="comment-content">
@@ -50,8 +52,7 @@
 				</li>
 			</ul>
 		</div>
-		<button type="button" @click="speak()">发表评论</button>
-		<div id="comment" style="display: none;">
+		<div id="comment" class="editor">
 			<router-view></router-view>
 		</div>
 	</div>
@@ -110,11 +111,14 @@
 			};
 		},
 		methods: {
-			speak(){
+			reply(data){
+				// if(data.children)
 				var comment = $("#comment").html();
 				layer.open({
 				  type: 1,
+				  title:"回复"+data.autorName,
 				  skin: 'layui-layer-demo', //样式类名
+				  area: ['45%', '45%'], //宽高
 				  closeBtn: 0, //不显示关闭按钮
 				  anim: 2,
 				  shadeClose: true, //开启遮罩关闭
@@ -178,7 +182,16 @@
 	 * Lista de Comentarios
 	 =======================*/
 	}
-
+	.right{
+		float: right;
+		margin-right: 2%;
+	}
+	.right a{
+		color: greenyellow;
+	}
+	.right a:hover{
+		color: orange;
+	}
 	.comments-container {
 		margin: 60px auto 15px;
 		width: 768px;
