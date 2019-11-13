@@ -65,8 +65,8 @@
         </div>
       </div>
     </header>
-    <div id="login" v-show="1">
-      <login></login>
+    <div id="login" v-show="false">
+      <login :login-index="loginIndex"></login>
     </div>
   </div>
 </template>
@@ -84,19 +84,23 @@ export default {
         ["放映点信息", "/home", false],
         ["评论区", "/theaterComment", false],
         ["关于我们", "/home", false]
-      ]
+      ],
+      loginIndex:0
     };
   },
   methods: {
+    // closeLogin(){
+    //   layer.close(this.loginIndex);
+    // },
     login() {
       // if(data.children)
-      var login = $("#login").html();
-      layer.open({
+      var login = $("#login");
+      this.loginIndex = layer.open({
         type: 1,
-        title: "登录",
+        title: null,
         skin: "layui-layer-demo", //样式类名
-        area: ["45%", "45%"], //宽高
-        closeBtn: 1, //不显示关闭按钮
+        area: ["35%", "40%"], //宽高
+        closeBtn: 0, //不显示关闭按钮
         anim: 2,
         shadeClose: false, //开启遮罩关闭
         content: login

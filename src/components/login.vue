@@ -1,29 +1,38 @@
 <template>
   <div>
-    <el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" >
-      <h3 class="login-title">欢迎登录</h3>
-      <el-form-item label="账号" prop="username">
-        <el-input type="text" placeholder="请输入账号" v-model="form.username"/>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input type="password" placeholder="请输入密码" v-model="form.password"/>
-      </el-form-item>
-      <el-form-item>
-        <el-button id="login" type="primary" v-on:click="onSubmit('loginForm')">登录</el-button>
-      </el-form-item>
+    <el-form ref="loginForm" class="login-box" :model="form" :rules="rules" label-width="80px" >
+      <el-row>
+         <el-col :span="24" style="background-color:#409EFF">
+           <div class="grid-content bg-purple-dark">
+           <h2 class="login-title">欢迎登录</h2>
+           </div>
+          </el-col>
+      </el-row>
+      <div style="width:80%;margin:2% 5%;text-align:center;">
+        <el-form-item label="账号" prop="username" >
+          <el-input type="text" placeholder="请输入账号" v-model="form.username"/>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input type="password" placeholder="请输入密码" v-model="form.password"/>
+        </el-form-item>
+        <div style="color:black;">
+          还没有账号？<a href="#">注册一个</a>
+        </div>
+        <el-form-item >
+          <el-button id="login" type="primary" v-on:click="onSubmit('loginForm')">登录</el-button>
+          <el-button @click="closeLogin()">取消</el-button>
+        </el-form-item>
+      </div>
     </el-form>
 
-    <el-dialog title="温馨提示" :visible.sync="dialogVisible" width="30%">
-      <span>请输入账号和密码</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
   export default{
+    props:[
+      "loginIndex"
+    ],
     data() {
       return {
         form: {
@@ -39,46 +48,40 @@
             {required: true, message: '密码不可为空', trigger: 'blur'}
           ]
         },
-        // 对话框显示和隐藏
-        dialogVisible: false
       }
     },
     methods: {
+      closeLogin(){
+        // 关闭登录框
+        layer.close(this.loginIndex);
+      },
       onSubmit(formName) {
         // 为表单绑定验证功能
         this.$refs[formName].validate((valid) => {
+          // 如果验证通过
           if (valid) {
-            // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
-            this.$router.push("/main");
+          // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
+            this.$router.push("/home");
+            // 关闭登录框
+             layer.close(this.loginIndex);
           } else {
-            this.dialogVisible = true;
+            layer.msg("账号和密码不能为空！");
             return false;
           }
         });
       }
     }
   }
-//  $(document).on('click', '#login', ()=> {
-//       alert("111");
-//   // login.onSubmit('loginForm');
-// });
 </script>
 
 <style scoped>
-  .login-box {
-    border: 1px solid #DCDFE6;
-    width: 350px;
-    margin: 180px auto;
-    padding: 35px 35px 15px 35px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    box-shadow: 0 0 25px #909399;
+  .login-box a{
+    color: blue;
   }
 
   .login-title {
     text-align: center;
-    margin: 0 auto 40px auto;
+    margin: 3% auto 3% auto;
     color: #303133;
   }
 </style>

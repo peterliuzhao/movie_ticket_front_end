@@ -115,7 +115,7 @@
 		methods: {
 			reply(data){
 				// if(data.children)
-				var comment = $("#comment").html();
+				var comment = $("#comment");
 				layer.open({
 				  type: 1,
 				  title:"回复"+data.autorName,
