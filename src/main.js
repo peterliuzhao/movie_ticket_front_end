@@ -12,7 +12,8 @@ import '../css/style.css';
 import '../css/responsive.css';
 import '../css/zerogrid.css';
 
-axios.defaults.baseURL = "http://localhost";
+axios.defaults.baseURL = "http://localhost:8888";
+window.axios = axios;
 // 固定写法
 Vue.use(VueRouter);
 Vue.use(ElementUI) //使用elementUI

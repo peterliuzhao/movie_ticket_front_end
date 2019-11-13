@@ -57,7 +57,8 @@
         form: {
           username: '',
           password: '',
-          checkPassword: ''
+          checkPassword: '',
+          tid:1
         },
         // 表单验证，需要在 el-form-item 元素中增加 prop 属性
         rules: {
@@ -83,13 +84,25 @@
         layer.close(this.regIndex);
       },
       onSubmit(formName) {
+        var form = this.form;
         // 为表单绑定验证功能
         this.$refs[formName].validate((valid) => {
           // 如果验证通过
           if (valid) {
             // 关闭注册框
-             this.$emit('login');
-            layer.msg("注册成功！");
+            axios.get("users/save",{
+              params:{
+                uname:form.username,
+                upwd:form.password,
+                tid:form.tid
+              }
+            }).then((data)=>{
+              this.$emit('login');
+              layer.msg("注册成功！");
+            }).catch((error)=>{
+              layer.msg("该账号已存在！");
+            });
+             
           } else {
             layer.msg("账号和密码不能为空！");
             return false;

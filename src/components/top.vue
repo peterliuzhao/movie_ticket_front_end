@@ -18,7 +18,12 @@
             </div>
             <div class="col-1-2">
               <div class="wrap-col f-right">
-                <a href="#" @click.prevent="login()">登录/注册</a>
+                <a href="#" v-show="loginBtn" @click.prevent="login()">登录/注册</a>
+                <span v-show="!loginBtn">
+                  <a href="#">当前用户：</a>
+                  <a href="#">{{loginUname}}</a>
+                  <a href="#">退出登录</a>
+                </span>
               </div>
             </div>
           </div>
@@ -59,7 +64,7 @@
         </div>
       </div>
     </header>
-      <login id="login" v-show="false" :login-index="loginIndex" @reg="reg()"></login>
+      <login id="login" v-show="false" :login-index="loginIndex" @loginMsg="loginMsg" @reg="reg()"></login>
       <reg id="reg" v-show="false" :reg-index="regIndex" @login="login()"></reg>
   </div>
 </template>
@@ -70,6 +75,8 @@ import reg from "./reg.vue";
 export default {
   data() {
     return {
+      loginUname:"",//当前登录用户的用户名
+      loginBtn:true,//是否显示登录按钮
       meals: [
         ["首页", "/home", true],
         ["选座", "/selectSeat", false],
@@ -84,6 +91,10 @@ export default {
     };
   },
   methods: {
+    loginMsg(data){
+      this.loginUname = data;
+      this.loginBtn = false;
+    },
     reg() {
       try {
         layer.close(this.loginIndex);
@@ -131,7 +142,11 @@ export default {
 </script>
 
 <style scoped="scoped">
-#top a {
-  color: white;
+#top .wrap-col a {
+  color: greenyellow;
 }
+#top .wrap-col a:hover {
+  color: orange;
+}
+
 </style>
