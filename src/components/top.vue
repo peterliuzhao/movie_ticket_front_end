@@ -18,8 +18,7 @@
             </div>
             <div class="col-1-2">
               <div class="wrap-col f-right">
-                <a href="#" @click.prevent="login()">登录</a>
-                注册
+                <a href="#" @click.prevent="login()">登录/注册</a>
               </div>
             </div>
           </div>
@@ -50,12 +49,7 @@
             <nav>
               <div class="wrap-nav">
                 <ul>
-                  <li
-                    v-for="(meal,i) in meals"
-                    :key="i"
-                    :class="{active:meal[2]}"
-                    @click="select(i)"
-                  >
+                  <li v-for="(meal,i) in meals" :key="i" :class="{active:meal[2]}" @click="select(i)">
                     <router-link :to="meal[1]">{{meal[0]}}</router-link>
                   </li>
                 </ul>
@@ -65,14 +59,14 @@
         </div>
       </div>
     </header>
-    <div id="login" v-show="false">
-      <login :login-index="loginIndex"></login>
-    </div>
+      <login id="login" v-show="false" :login-index="loginIndex" @reg="reg()"></login>
+      <reg id="reg" v-show="false" :reg-index="regIndex" @login="login()"></reg>
   </div>
 </template>
 
 <script>
 import login from "./login.vue";
+import reg from "./reg.vue";
 export default {
   data() {
     return {
@@ -85,23 +79,39 @@ export default {
         ["评论区", "/theaterComment", false],
         ["关于我们", "/home", false]
       ],
-      loginIndex:0
+      loginIndex:0,
+      regIndex:0
     };
   },
   methods: {
-    // closeLogin(){
-    //   layer.close(this.loginIndex);
-    // },
+    reg() {
+      try {
+        layer.close(this.loginIndex);
+      } catch (error) {}
+      var reg = $("#reg");
+      this.regIndex = layer.open({
+        type: 1,
+        title: null,
+        anim:-1,//	弹出时动画：无动画
+        skin: "layui-layer-demo", //样式类名
+        area: ["35%", "45%"], //宽高
+        closeBtn: 0, //不显示关闭按钮
+        shadeClose: false, //开启遮罩关闭
+        content: reg
+      });
+    },
     login() {
-      // if(data.children)
+      try {
+        layer.close(this.regIndex);
+      } catch (error) {}
       var login = $("#login");
       this.loginIndex = layer.open({
         type: 1,
         title: null,
+        anim:-1,//	弹出时动画：无动画
         skin: "layui-layer-demo", //样式类名
         area: ["35%", "40%"], //宽高
         closeBtn: 0, //不显示关闭按钮
-        anim: 2,
         shadeClose: false, //开启遮罩关闭
         content: login
       });
@@ -115,7 +125,7 @@ export default {
     }
   },
   components: {
-    login
+    login,reg
   }
 };
 </script>

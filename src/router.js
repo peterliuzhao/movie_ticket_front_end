@@ -22,7 +22,7 @@ var router = new VueRouter({
 				"top": top,
 				"middle": middle,
 				"bottom": bottom
-			},children:[
+		}, children: [
 				{path:"/home",component:home,children:[
 					{path:"/home",components:{
 						"hotFilmsList":hotFilmsList,

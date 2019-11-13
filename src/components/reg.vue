@@ -1,10 +1,10 @@
 <template>
   <div>
-    <el-form ref="loginForm" class="login-box" :model="form" :rules="rules" label-width="80px" >
+    <el-form ref="regForm" class="login-box" :model="form" :rules="rules" label-width="80px" >
       <el-row>
          <el-col :span="24" style="background-color:#409EFF">
            <div class="grid-content bg-purple-dark">
-           <h2 class="login-title">欢迎登录</h2>
+           <h2 class="login-title">欢迎注册</h2>
            </div>
           </el-col>
       </el-row>
@@ -15,12 +15,15 @@
         <el-form-item label="密码" prop="password">
           <el-input type="password" placeholder="请输入密码" v-model="form.password"/>
         </el-form-item>
+        <el-form-item label="确认密码" prop="checkPassword">
+          <el-input type="password" placeholder="请再次输入密码" v-model="form.checkPassword"/>
+        </el-form-item>
         <div style="color:black;">
-          还没有账号？<a href="#" @click.prevent="reg()">注册一个</a>
+          已经有账号？<a href="#" @click.prevent="login()">去登录</a>
         </div>
         <el-form-item >
-          <el-button id="login" type="primary" v-on:click="onSubmit('loginForm')">登录</el-button>
-          <el-button @click="closeLogin()">取消</el-button>
+          <el-button id="reg" type="primary" @click="onSubmit('regForm')">注册</el-button>
+          <el-button @click="closeReg()">取消</el-button>
         </el-form-item>
       </div>
     </el-form>
@@ -30,15 +33,31 @@
 
 <script>
   export default{
-    // 父组件传过来的属性
     props:[
-      "loginIndex"
+      "regIndex"
     ],
     data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else{
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.form.password) {
+          callback(new Error('两次输入密码不一致!'));
+        }else{
+          callback();
+        }
+      };
       return {
         form: {
           username: '',
-          password: ''
+          password: '',
+          checkPassword: ''
         },
         // 表单验证，需要在 el-form-item 元素中增加 prop 属性
         rules: {
@@ -46,28 +65,31 @@
             {required: true, message: '账号不可为空', trigger: 'blur'}
           ],
           password: [
-            {required: true, message: '密码不可为空', trigger: 'blur'}
+            {required: true, validator: validatePass, trigger: 'blur'}
+          ],
+          checkPassword: [
+            {required: true, validator: validatePass2, trigger: 'blur'}
           ]
         },
+        
       }
     },
     methods: {
-      reg(){
-        this.$emit('reg');
+      login(){
+        this.$emit('login');
       },
-      closeLogin(){
-        // 关闭登录框
-        layer.close(this.loginIndex);
+      closeReg(){
+        // 关闭注册框
+        layer.close(this.regIndex);
       },
       onSubmit(formName) {
         // 为表单绑定验证功能
         this.$refs[formName].validate((valid) => {
           // 如果验证通过
           if (valid) {
-          // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
-            this.$router.push("/home");
-            // 关闭登录框
-             layer.close(this.loginIndex);
+            // 关闭注册框
+             this.$emit('login');
+            layer.msg("注册成功！");
           } else {
             layer.msg("账号和密码不能为空！");
             return false;
