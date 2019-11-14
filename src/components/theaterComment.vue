@@ -3,9 +3,9 @@
 		<!-- 评论区 -->
 		<div class="comments-container">
 			<ul id="comments-list" class="comments-list">
-				<li v-for='comment in comments' :key='comment'>
+				<li v-for='(comment,i) in list' :key='i'>
 					<!-- 一级评论 -->
-					<div class="comment-main-level">
+					<div class="comment-main-level" v-if="comment.rw_parentId==null">
 						<!-- 一级评论作者头像 -->
 						<div class="comment-avatar"><img :src="comment.autorPhoto" alt="">
 						</div>
@@ -13,39 +13,34 @@
 						<div class="comment-box">
 							<div class="comment-head">
 								<!-- 一级评论作者 -->
-								<h6 class="comment-name"><a href="#">{{comment.autorName}}</a></h6>
+								<h6 class="comment-name"><a href="#">{{comment.uname}}</a></h6>
 								<!-- 一级评论时间 -->
-								<span>{{comment.messageTime|time}}</span>
+								<span>{{comment.rwtime|time}}</span>
 								<i class="fa fa-reply"></i>
 								<i class="fa fa-heart"></i>
 								<div class="right"><a href="#" @click.prevent="reply(comment)">回复</a></div>
 							</div>
 							<!-- 一级评论内容 -->
-							<div class="comment-content">
-								{{comment.message}}
-							</div>
+							<div class="comment-content" v-html="comment.rwtext"></div>
 						</div>
 					</div>
-					<ul class="comments-list reply-list">
-						<li v-for="childComment in comment.children" :key="childComment">
+					<ul class="comments-list reply-list" >
+						<li v-for="(childComment,j) in list" :key="j" v-show="childComment.rw_parentId!=null&&childComment.rw_parentId==comment.rwid">
 							<!-- 二级评论头像 -->
-							<div class="comment-avatar"><img :src="childComment.autorPhoto" alt="">
-							</div>
+							<div class="comment-avatar"><img :src="childComment.autorPhoto" alt=""></div>
 							<!-- 二级评论框 -->
 							<div class="comment-box">
 								<div class="comment-head">
 									<!-- 二级评论作者 -->
-									<h6 class="comment-name"><a href="#">{{childComment.autorName}}</a></h6>
+									<h6 class="comment-name"><a href="#">{{childComment.uname}}</a></h6>
 									<!-- 二级评论时间 -->
-									<span>{{childComment.messageTime|time}}</span>
+									<span>{{childComment.rwtime|time}}</span>
 									<i class="fa fa-reply"></i>
 									<i class="fa fa-heart"></i>
 									<div class="right"><a href="#" @click.prevent="reply(childComment)">回复</a></div>
 								</div>
 								<!-- 二级评论内容 -->
-								<div class="comment-content">
-									{{childComment.message}}
-								</div>
+								<div class="comment-content" v-html="childComment.rwtext"></div>
 							</div>
 						</li>
 					</ul>
@@ -54,71 +49,36 @@
 		</div>
 		<div style="width:60%;margin:auto;">
 			<div id="comment" class="editor">
-				<router-view></router-view>
+				<!-- <router-view :rw-parentid="rwParentid"></router-view> -->
+				<editor :rw-parentid="rwParentid" :rwindex="rwindex"></editor>
 			</div>
 		</div>
 	</div>
 </template>
 
-<script>
+<script>	
+	import editor from "./editor.vue";
 	export default {
-		data() {
+		
+		created() {
+			this.findAll();
+		},
+		
+		data() {			
 			return {
-				comments: [{
-					"autorName": "张无忌",
-					"autorPhoto": "/images/0.jpg",
-					"message": "这家影院不错，改天和敏敏来看电影！",
-					"messageTime": "Mon Feb 1 2019 13:34:14",
-					children:[
-						{
-							"autorName": "赵敏",
-							"autorPhoto": "/images/1.jpg",
-							"message": "我请客，你掏钱！",
-							"messageTime": "Mon Nov 1 2019 13:34:14"
-						},
-						{
-							"autorName": "周芷若",
-							"autorPhoto": "/images/3.jpg",
-							"message": "我也要去！",
-							"messageTime": "Mon March 11 2019 13:34:14"
-						}
-					]
-				},
-				{
-					"autorName": "段誉",
-					"autorPhoto": "/images/2.jpg",
-					"message": "辣鸡影院，再也不来了！",
-					"messageTime": "Mon Nov 11 2019 13:34:14",
-					children:[
-						{
-							"autorName": "乔峰",
-							"autorPhoto": "/images/4.jpg",
-							"message": "+1",
-							"messageTime": "Mon Nov 11 2019 17:34:14"
-						},
-						{
-							"autorName": "虚竹",
-							"autorPhoto": "/images/5.jpg",
-							"message": "+1",
-							"messageTime": "Mon Nov 11 2019 17:39:14"
-						},
-						{
-							"autorName": "段誉",
-							"autorPhoto": "/images/2.jpg",
-							"message": "大哥，二哥QAQ",
-							"messageTime": "Mon Nov 11 2019 17:34:14"
-						}
-					]
-				}]
-			};
+				list :null,
+				rwParentid:null,
+				rwindex:null//评论弹框编号
+			}; 
 		},
 		methods: {
 			reply(data){
 				// if(data.children)
 				var comment = $("#comment");
-				layer.open({
+				this.rwParentid = data.rwid;
+				this.rwindex = layer.open({
 				  type: 1,
-				  title:"回复"+data.autorName,
+				  title:"回复"+data.uname,
 				  skin: 'layui-layer-demo', //样式类名
 				  area: ['45%', '45%'], //宽高
 				  closeBtn: 0, //不显示关闭按钮
@@ -126,8 +86,15 @@
 				  shadeClose: true, //开启遮罩关闭
 				  content: comment
 				});
+			},
+			 findAll(){
+				  axios.get("reviews/").then((response)=>{
+					this.list = response.data;
+					console.log(this.list);			
+				});
 			}
 		},
+		
 		filters:{
 			time(data){
 				var date = new Date(data);
@@ -152,9 +119,9 @@
 				}else{
 					return (date.getMonth()+1)+"-"+date.getDate();
 				}
-				// return new Date()-date;
-				// return (date.getMonth()+1)+"-"+date.getDate();
 			}
+		},components:{
+			editor
 		}
 	}
 </script>

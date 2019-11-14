@@ -1,5 +1,7 @@
 <template>
 	<div class="editor">
+		<label>评论人：</label>
+			<input type="text" readonly :value="loginUser.uname">
 		<div ref="toolbar" class="toolbar">
 		</div>
 		<div ref="editor" class="text">
@@ -14,6 +16,10 @@
 		name: 'editoritem',
 		data() {
 			return {
+				loginUser:{
+					uname:store.state.loginUser.uname,
+					tid:store.state.loginUser.tid
+				},
 				// uploadPath,
 				editor: null,
 				info_: null
@@ -23,16 +29,19 @@
 			prop: 'value',
 			event: 'change'
 		},
-		props: {
-			value: {
-				type: String,
-				default: ''
-			},
-			isClear: {
-				type: Boolean,
-				default: false
-			}
-		},
+		props: [
+			// {
+			// 	value: {
+			// 		type: String,
+			// 		default: ''
+			// 	},
+			// 	isClear: {
+			// 		type: Boolean,
+			// 		default: false
+			// 	}
+			// },
+			"rwParentid","rwindex"
+		],
 		watch: {
 			isClear(val) {
 				// 触发清除文本域内容
@@ -53,8 +62,25 @@
 			this.editor.txt.html(this.value)
 		},
 		methods: {
-			commit(){
-				alert(this.editor.txt.html());
+			commit(data){
+				// alert(this.editor.txt.html());
+				var rwParentid = this.rwParentid;
+				var rwindex = this.rwindex;
+				console.log(rwParentid)
+				axios.post('reviews',{
+					uid:"2cdb982bad574c32ba45333f76827e78",
+					rwtext:this.editor.txt.html(),
+					rwtime:new Date(),
+					rwParentid:rwParentid
+				})
+				.then((response)=>{
+					console.log(response.data);
+					layer.close(rwindex);
+					layer.msg("回复成功")
+				})
+				.catch((error)=>{
+					console.log(error.data);
+				})
 			},
 			seteditor() {
 				// http://192.168.2.125:8080/admin/storage/create
@@ -123,6 +149,7 @@
 		z-index: 0;
 		background-color: rgba(255,255,255,0.7);
 		font-size: 20px;
+		color: black;
 	}
 
 	.toolbar {
