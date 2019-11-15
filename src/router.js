@@ -4,16 +4,17 @@ Vue.use(VueRouter);
 import top from './components/top.vue';
 import middle from './components/middle.vue';
 import bottom from './components/bottom.vue';
-import home from './components/home.vue';
-import selectSeat from './components/selectSeat.vue';
-import film from './components/film.vue';
-import hotFilmsList from './components/hotFilmsList.vue';todayFilms
-import filmTags from './components/filmTags.vue';
-import todayFilms from './components/todayFilms.vue';hotFilms
-import hotPlaying from './components/hotPlaying.vue';theaterComment
-import hotFilms from './components/hotFilms.vue';
-import theaterComment from './components/theaterComment.vue';
-import editor from './components/editor.vue';
+import home from './components/home.vue';//主页
+import selectSeat from './components/selectSeat.vue';//选座
+import film from './components/film.vue';//电影单页面
+import hotFilmsList from './components/hotFilmsList.vue';//热门电影列表
+import filmTags from './components/filmTags.vue';//电影标签
+import todayFilms from './components/todayFilms.vue';//今日推荐
+import hotPlaying from './components/hotPlaying.vue';//热映电影组件
+import hotFilms from './components/hotFilms.vue';//热播电影组件
+import theaterComment from './components/theaterComment.vue';//评论区组件
+import editor from './components/editor.vue';//留言编辑器
+import filmList from './components/filmList.vue';//电影分类查询列表
 
 var router = new VueRouter({
 	routes: [
@@ -32,7 +33,8 @@ var router = new VueRouter({
 						"hotFilms":hotFilms
 					}}
 				]},
-				{path:"/selectSeat",component:selectSeat},
+				{ path: "/selectSeat", component: selectSeat },
+				{path:"/filmList",component:filmList},
 				{path:"/film",component:film,children:[
 					{path:"/film",components:{
 						"hotFilmsList":hotFilmsList,

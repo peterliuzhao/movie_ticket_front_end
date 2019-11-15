@@ -80,7 +80,7 @@ export default {
       meals: [
         ["首页", "/home", true],
         ["选座", "/selectSeat", false],
-        ["电影", "/home", false],
+        ["电影", "/filmList", false],
         ["榜单", "/home", false],
         ["放映点信息", "/home", false],
         ["评论区", "/theaterComment", false],

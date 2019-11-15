@@ -7,7 +7,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-1-4" v-for='film in films'>
+				<div class="col-1-4" v-for='(film,i) in films' :key="i">
 					<div class="wrap-col">
 						<div class="post">
 							<div class="view effect">

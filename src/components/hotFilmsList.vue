@@ -6,7 +6,7 @@
 			</div>
 			<div class="wid-content">
 				<ul>
-					<li v-for='film in films'>
+					<li v-for='(film,i) in films' :key="i">
 						<a href="#">{{film}}</a>
 						<span><img src="images/hot.png" /></span>
 					</li>
