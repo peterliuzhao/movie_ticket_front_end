@@ -1,9 +1,12 @@
 <template>
   <div id="filmList">
-      <div class="selectTypeList zerogrid">
+      <div class="selectTypeList zerogrid meals">
           <div v-for="(meal,i) in meals" :key="i" class="rows">
-              <div v-for="(mealItem,j) in meal" :key="j">
-                  {{mealItem}},
+            <div class="tag">{{meal[0]}}:</div>
+              <div v-for="(mealItem,j) in meal[1]" :key="j">
+                  <div class="item">
+                    <span :class="{checked:mealItem[1]}" @click="select(i,j)">{{mealItem[0]}}</span>
+                  </div>
               </div>
           </div>
       </div>
@@ -54,9 +57,9 @@ export default {
   data() {
     return {
         meals:[
-            {"按类型":['科幻','历史','穿越','校园']},
-            {"按上映时间":['2015','2016','2017','2018','2019']},
-            {"按价格":['20元以下','20-30','30-40','40元以上']}
+            ["按类型",[['科幻',true],['历史',false],['穿越',false],['校园',false]]],
+            ["按上映时间",[['2015',true],['2016',false],['2017',false],['2018',false],['2019',false]]],
+            ["按价格",[['20元以下',true],['20-30',false],['30-40',false],['40元以上',false]]]
         ],
       films: [
         {
@@ -87,7 +90,25 @@ export default {
       ]
     };
   },
-  methods: {}
+  methods: {
+    select(i,j) {
+      for(var a=0;a<this.meals[i][1].length;a++){
+        if(this.meals[i][1][a][1]){
+           this.$set(this.meals, i, this.meals[i]);
+           this.meals[i][1][a][1] = false;
+           this.meals[i][1][j][1] = true;
+           break;
+        }
+       
+      }
+      
+      // for (var j = 0; j < this.meals.length; j++) {
+      //   this.meals[j][2] = false;
+      //   this.$set(this.meals, j, this.meals[j]);
+      // }
+      // this.meals[index][2] = true;
+    }
+  }
 };
 </script>
 
@@ -95,7 +116,27 @@ export default {
 .selectTypeList div{
     float: left;
 }
+.meals{
+  border: 1px solid white;
+}
 .rows{
     clear: both;
+    background-color:rgba(112, 112, 112, 0.5);
+    margin:5px 0 5px 0;
+    padding: 3px;
+    width: 100%
+}
+.rows .tag{
+  width: 100px;
+}
+.rows .item{
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+}
+.rows .checked{
+  background-color: orange;
+  padding: 5px;
+  border-radius: 10%;
 }
 </style>
