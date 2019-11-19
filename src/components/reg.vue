@@ -58,7 +58,8 @@
           username: '',
           password: '',
           checkPassword: '',
-          tid:1
+          tid:1,
+          tname:"万达影视"
         },
         // 表单验证，需要在 el-form-item 元素中增加 prop 属性
         rules: {

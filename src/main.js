@@ -14,8 +14,8 @@ import '../css/responsive.css';
 import '../css/zerogrid.css';
 import store from './store.js';
 
-// axios.defaults.baseURL = "http://localhost:8888";
-axios.defaults.baseURL = "http://39.96.73.68:8080";
+axios.defaults.baseURL = "http://localhost:8888";
+// axios.defaults.baseURL = "http://39.96.73.68:8080";
 
 window.axios = axios;
 window.store = store;

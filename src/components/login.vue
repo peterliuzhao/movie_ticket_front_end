@@ -39,7 +39,8 @@
         form: {
           username: '',
           password: '',
-          tid:1
+          tid:1,
+          tname:"万达影视"
         },
         // 表单验证，需要在 el-form-item 元素中增加 prop 属性
         rules: {
@@ -72,9 +73,12 @@
               params:{
                 uname:app.form.username,
                 upwd:app.form.password,
-                tid:app.form.tid
+                // tid:app.form.tid,
+                theaterName:app.form.tname
               }
             }).then((response)=>{
+              app.form.username = null;
+              app.form.password = null;
               if(response.data.status==200){
                  // 关闭登录框
                 layer.close(app.loginIndex);

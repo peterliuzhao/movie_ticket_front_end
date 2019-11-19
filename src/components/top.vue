@@ -22,7 +22,7 @@
                 <span v-show="!loginBtn">
                   <a href="#">当前用户：</a>
                   <a href="#">{{loginUname}}</a>
-                  <a href="#">退出登录</a>
+                  <a href="#" @click.prevent="exit()">退出登录</a>
                 </span>
               </div>
             </div>
@@ -91,6 +91,12 @@ export default {
     };
   },
   methods: {
+    exit(){
+       this.loginUname = "";
+      this.loginBtn = true;
+      store.state.loginUser.uname=null;
+      store.state.loginUser.tid=null;
+    },
     loginMsg(data){
       this.loginUname = data;
       this.loginBtn = false;
