@@ -85,6 +85,7 @@
                 layer.msg("登录成功！"+response.data.username+",欢迎您！");
                 app.$emit('loginMsg',response.data.username)
                 // 给全局变量当前登录用户赋值
+                store.state.loginUser.uid = response.data.uid;
                 store.state.loginUser.uname = response.data.username;
                 store.state.loginUser.tid = 1;
               }else{

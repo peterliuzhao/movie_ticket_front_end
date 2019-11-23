@@ -17,6 +17,7 @@
 		data() {
 			return {
 				loginUser:{
+					uid:store.state.loginUser.uid,
 					uname:store.state.loginUser.uname,
 					tid:store.state.loginUser.tid
 				},
@@ -66,9 +67,10 @@
 				// alert(this.editor.txt.html());
 				var rwParentid = this.rwParentid;
 				var rwindex = this.rwindex;
+				var loginUser = this.loginUser;
 				console.log(rwParentid)
 				axios.post('reviews',{
-					uid:"2cdb982bad574c32ba45333f76827e78",
+					uid:loginUser.uid,
 					rwtext:this.editor.txt.html(),
 					rwtime:new Date(),
 					rwParentid:rwParentid

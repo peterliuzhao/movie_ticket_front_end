@@ -7,6 +7,7 @@ var store = new Vuex.Store({
     state: {
         // 当前登录的用户
         loginUser: {
+            uid:null,
             uname: null,
             tid: null
         }

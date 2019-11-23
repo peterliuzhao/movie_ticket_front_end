@@ -22,9 +22,9 @@
 					</span>
 					<hr style="width: 90%;">
 				</div>
-				<div v-for="(item,i) in list" class="row" style="margin-left: 15%;">
+				<div v-for="(item,i) in list" :key="i" class="row" style="margin-left: 15%;">
 					<div class="sit bg-nosit" style="margin-right:50px">{{i+1}}</div>
-					<div @click="selectSeat(item1,i,j)" :class="['sit',{'bg-temp':item1==3},{'bg-sited':item1==2},{'bg-sit':item1==1},{'bg-nosit':item1==0}]"
+					<div @click="selectSeat(item1,i,j)" :key="j" :class="['sit',{'bg-temp':item1==3},{'bg-sited':item1==2},{'bg-sit':item1==1},{'bg-nosit':item1==0}]"
 					 v-for="(item1,j) in item">
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 				<div class="row">
 					<div>座位：</div>
 					<div>
-						<div v-for="sit in msg">
+						<div v-for="(sit,i) in msg" :key="i">
 							<span class="select-sit">{{sit|f3}}</span>
 						</div>
 					</div>
@@ -73,7 +73,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </template>
 
@@ -89,8 +88,8 @@
 					svaddress: "5号放映厅",
 					//开始时间
 					fstartTime: new Date(),
-					filmName: "社会",
-					filmType: "黑道",
+					filmName: "尘客",
+					filmType: "都市",
 					filmImg: "images/2.jpg",
 					filmPrice: 33.50
 				},
